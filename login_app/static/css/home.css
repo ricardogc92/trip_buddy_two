@@ -1,0 +1,32 @@
+*{
+    margin: 0px;
+    padding: 0px;
+}
+#container{
+    width: 970px;
+    margin: auto;
+    padding: 50px;
+    background-color: teal;
+
+}
+h1{
+    text-align: center;
+}
+#body{
+    display: flex;
+    justify-content: center;
+    
+    
+}
+label{
+    display: inline-block;
+    width:100px;
+}
+
+.block{
+    width: 300px;
+    border: solid 2px black;
+    margin: 20px 20px 0px 0px;
+    background-color: green;
+    padding: 5px;
+}

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+</head>
+<body>
+    <div id="container">
+        <div id="header">
+            <h1>Hello {{user.first_name}}!</h1>
+            <a href="/logout">Log Out</a>
+            <button class="btn btn-success"><a href="/trips/new">Create a new trip!</a></button>
+        </div>
+        <h3>Your trips:</h3>
+        <table class="table table-striped">
+            <tr>
+                <th>Destination</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Plan</th>
+                <th>Actions</th>
+            </tr>
+            {% for trip in trips reversed %}
+            {% if user == trip.owner or user in trip.users_joined.all%}
+            <tr>
+                <td><a href="/trips/{{trip.id}}">{{trip.destination}}</a></td>
+                <td>{{trip.start_date}}</td>
+                <td>{{trip.end_date}}</td>
+                <td>{{trip.plan}}</td>
+                {% if user == trip.owner %}
+                <td><a href="/trips/destroy/{{trip.id}}">Remove</a>|<a href="/trips/edit/{{trip.id}}">Edit</a></td>
+                {% endif %}
+                {% if user in trip.users_joined.all %}
+                <td><a href="/trips/cancel/{{trip.id}}">Cancel</a></td>
+                {% endif %}
+            </tr>
+            {% endif %}
+            {% endfor %}
+        </table>
+        <h3>Other people's trips</h3>
+        <table class="table table-striped">
+            <tr>
+                <th>Destination</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Plan</th>
+                <th>Want to join?</th>
+            </tr>
+            {% for trip in trips %}
+            {% if user != trip.owner and user not in trip.users_joined.all%}
+            <tr>
+                <td><a href="/trips/{{trip.id}}">{{trip.destination}}</a></td>
+                <td>{{trip.start_date}}</td>
+                <td>{{trip.end_date}}</td>
+                <td>{{trip.plan}}</td>
+                <td><a href="/trips/join/{{trip.id}}">Join</a></td>
+            </tr>
+            {% endif %}
+            {% endfor %}
+        </table>
+    </div>
+    
+</body>
+</html>

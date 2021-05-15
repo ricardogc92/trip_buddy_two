@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Start Trip</title>
+</head>
+<body>
+    <div id="container">
+        <div id="header">
+            <h1>Hello {{user.first_name}}! Create a trip!</h1>
+            <a href="/logout">Log Out</a>
+        </div>
+        <div id="body">
+            <ul>
+                {% if messages %}
+                {% for message in messages %}
+                <li>{{message}}</li>
+                {% endfor %}
+                {% endif %}
+            </ul>
+            <form action="/trips/create" method="POST">
+            {% csrf_token %}
+            <div>
+                <label for="destination">Destination:</label>
+                <input type="text" name="destination">
+            </div>
+            <div>
+                <label for="start_date">Start Date:</label>
+                <input type="date" name="start_date">
+            </div>
+            <div>
+                <label for="end_date">End Date:</label>
+                <input type="date" name="end_date">
+            </div>
+            <div>
+                <label for="plan">Plan:</label>
+                <input type="text" name="plan">
+            </div>
+            <div>
+                <button><a href="/dashboard">Cancel</a></button>
+                <input type="submit" value="Submit">
+            </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
